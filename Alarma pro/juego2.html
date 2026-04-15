@@ -45,25 +45,25 @@ button {
 </div>
 
 <script>
-// colores posibles
+
 let colores = ["🔴","🔵","🟢","🟡"];
 
-// generar secuencia
+
 let secuencia = [];
 for(let i = 0; i < 4; i++){
     secuencia.push(colores[Math.floor(Math.random()*colores.length)]);
 }
 
-// mostrar secuencia
+
 document.getElementById("secuencia").innerText = secuencia.join(" ");
 
-// ocultar después de 5 segundos
+
 setTimeout(() => {
     document.getElementById("secuencia").innerText = "❓ ❓ ❓ ❓";
     document.getElementById("botones").style.display = "block";
 }, 5000);
 
-// respuesta jugador
+
 let respuesta = [];
 
 function agregar(color){
@@ -74,7 +74,7 @@ function agregar(color){
     }
 }
 
-// verificar
+
 function verificar(){
     if(JSON.stringify(respuesta) === JSON.stringify(secuencia)){
         alert("✅ Correcto, bomba desactivada");
