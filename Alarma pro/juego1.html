@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Bomba PRO</title>
+
+<style>
+body {
+    text-align: center;
+    background: #111;
+    color: white;
+    font-family: Arial;
+}
+
+.cable {
+    width: 250px;
+    height: 25px;
+    margin: 15px auto;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.rojo { background: red; }
+.azul { background: blue; }
+.verde { background: green; }
+.amarillo { background: yellow; }
+
+#cables {
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<h1>💣 Desactiva la bomba</h1>
+<p>Tiempo: <span id="tiempo">10</span></p>
+
+<!-- FASE 1 -->
+<div id="faseCodigo">
+    <h2>🔐 Ingresa el código</h2>
+    <p id="codigo"></p>
+    <input id="input">
+    <button onclick="verificar()">OK</button>
+</div>
+
+<!-- FASE 2 -->
+<div id="pista"></div>
+
+<!-- FASE 3 -->
+<div id="cables">
+    <h2>🔌 Corta el cable</h2>
+    <div class="cable rojo" onclick="cortar('rojo')"></div>
+    <div class="cable azul" onclick="cortar('azul')"></div>
+    <div class="cable verde" onclick="cortar('verde')"></div>
+    <div class="cable amarillo" onclick="cortar('amarillo')"></div>
+</div>
+
+<script>
+    
+let tiempo = 10;
+
+let intervalo = setInterval(() => {
+    tiempo--;
+    document.getElementById("tiempo").innerText = tiempo;
+
+    if (tiempo <= 0) {
+        clearInterval(intervalo);
+        alert("💥 BOOM");
+    }
+}, 1000);
+
+let codigo = Math.floor(Math.random()*900+100);
+document.getElementById("codigo").innerText = codigo;
+
+
+let colores = ["rojo","azul","verde","amarillo"];
+let correcto = colores[Math.floor(Math.random()*colores.length)];
+
+
+function verificar(){
+    let valor = document.getElementById("input").value;
+
+    if(valor == codigo){
+        document.getElementById("faseCodigo").style.display = "none";
+        document.getElementById("cables").style.display = "block";
+
+        darPista();
+    } else {
+        alert("❌ Código incorrecto");
+    }
+}
+
+
+function darPista(){
+    let pista = "";
+
+    // ejemplo: decir uno incorrecto
+    let falso;
+    do {
+        falso = colores[Math.floor(Math.random()*colores.length)];
+    } while(falso === correcto);
+
+    pista = "💡 Pista: el cable correcto NO es " + falso;
+
+    document.getElementById("pista").innerText = pista;
+}
+
+
+function cortar(color){
+    if(color === correcto){
+        alert("✅ Bomba desactivada");
+    } else {
+        alert("💥 BOOM");
+    }
+}
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Alarma PRO</title>
+<style>
+    body {
+        font-family: Arial;
+        text-align: center;
+        background: #111;
+        color: white;
+    }
+
+    .contenedor {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        margin-top: 50px;
+    }
+
+    #timer {
+        font-size: 80px;
+    }
+
+    #bomba {
+        width: 220px;
+        transition: transform 0.2s;
+    }
+
+    .latido {
+        transform: scale(1.2);
+    }
+
+    video {
+    display: none;
+    margin: 50px auto;
+    width: 90vw;
+    height: 90vh;
+  
+    z-index: 999;
+}
+
+    input, button {
+        font-size: 20px;
+        padding: 10px;
+        margin: 10px;
+    }
+    h1{
+font-size: 70px;
+       color:red; 
+    }
+    .imagenes {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 50px;
+}
+
+.imagenes img {
+    width: 400px;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.imagenes img:hover {
+    transform: scale(1.1);
+}
+</style>
+</head>
+<body>
+
+<h1>⏰ Temporizador   </h1>
+
+<input type="number" id="minutos" placeholder="Minutos">
+<button onclick="iniciar()">Iniciar</button>
+
+<div class="contenedor">
+    <div id="timer">00:00</div>
+    <img id="bomba" src="bomba.png">
+</div>
+<div class="imagenes">
+    <a href="juego1.html">
+        <img src="meme1.png">
+    </a>
+
+    <a href="juego2.html">
+        <img src="meme2.png">
+    </a>
+
+    <a href="juego3.html">
+        <img src="meme3.png">
+    </a>
+</div>
+
+<!-- AUDIO -->
+<audio id="sonido" src="alarma.mp3"></audio>
+<audio id="ticTac" src="tictac.mp3" loop></audio>
+
+<!-- VIDEO -->
+<video id="videoAlarma">
+    <source src="video.mp4" type="video/mp4">
+</video>
+
+<script>
+let intervalo;
+
+function iniciar() {
+    let minutos = document.getElementById("minutos").value;
+    let tiempo = minutos * 60;
+
+    clearInterval(intervalo);
+    let tic = document.getElementById("ticTac");
+       tic.currentTime = 0;
+          tic.play(); 
+
+    intervalo = setInterval(() => {
+        let min = Math.floor(tiempo / 60);
+        let seg = tiempo % 60;
+
+        document.getElementById("timer").innerHTML =
+            String(min).padStart(2, '0') + ":" +
+            String(seg).padStart(2, '0');
+
+       
+        let bomba = document.getElementById("bomba");
+        bomba.classList.toggle("latido");
+
+        tiempo--;
+
+        if (tiempo < 0) {
+            clearInterval(intervalo);
+
+         tic.pause();
+
+           
+            bomba.src = "explosion.png";
+
+            
+            document.getElementById("sonido").play();
+
+            
+          let video = document.getElementById("videoAlarma");
+                video.style.display = "block";
+
+               video.play();
+
+
+       if (video.requestFullscreen) {
+                  video.requestFullscreen();
+             }
+
+            
+        }
+    }, 1000);
+}
+</script>
+
+</body>
+</html>
+
