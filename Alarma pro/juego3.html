@@ -20,25 +20,22 @@ input, button { padding:10px; font-size:18px; margin:10px; }
 <button onclick="verificar()">OK</button>
 
 <script>
-// generar números
+
 let num1 = Math.floor(Math.random() * 20 + 1);
 let num2 = Math.floor(Math.random() * 20 + 1);
 
-// elegir operación
 let operaciones = ["+","-","*"];
 let op = operaciones[Math.floor(Math.random() * operaciones.length)];
 
 let resultado;
 
-// calcular resultado
 if(op === "+") resultado = num1 + num2;
 if(op === "-") resultado = num1 - num2;
 if(op === "*") resultado = num1 * num2;
 
-// mostrar operación
 document.getElementById("operacion").innerText = num1 + " " + op + " " + num2;
 
-// tiempo
+
 let tiempo = 10;
 
 let intervalo = setInterval(() => {
@@ -50,14 +47,13 @@ let intervalo = setInterval(() => {
         alert("💥 BOOM");
     }
 
-    // efecto tensión
     if(tiempo <= 3){
         document.body.style.background = "darkred";
     }
 
 }, 1000);
 
-// verificar
+
 function verificar() {
     let valor = document.getElementById("input").value;
 
